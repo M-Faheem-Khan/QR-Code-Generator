@@ -21,7 +21,8 @@ def main():
 def gen_qr_code(data):
     # Generates the qr-code based on the url data  
 
-    data = str(base64.b64decode(data))
+    data = str(base64.b64decode(data).decode("utf-8"))
+    print(data)
     # Create qr code instance
     qr = qrcode.QRCode(
         version = 1,
@@ -37,15 +38,18 @@ def gen_qr_code(data):
     img = qr.make_image()
     img.save("image.png")
     print("Image was saved")
-    img_url = str(base64.b64encode("http://localhost:5000/qr_image".encode("utf-8")).encode("ASCII"))
+    img_url = "localhost:5000/qr_image"
     # returning the image url
     return img_url
 
 # defining the url
 @app.route("/qr_image")
 def return_image():
-    # returning the qr_code image so the html page can get the image as a resource and display it in the page
-    return send_file("image.png", attachment_filename="image.png")
+    if "./image.png":
+        # returning the qr_code image so the html page can get the image as a resource and display it in the page
+        return send_file("image.png", attachment_filename="image.png")
+    else:
+        return "Image has not been generated yet"
 
 if __name__ == "__main__":
     app.run(host= '0.0.0.0', port=5000, debug=False)
