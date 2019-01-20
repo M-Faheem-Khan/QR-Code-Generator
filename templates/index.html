@@ -5,14 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Simple QR-Code Generator</title>
+    <style>
+        /*adding styles for the page*/
+        body{
+            background: #1a203b;
+            color: #efefef;
+        }
+
+        button{
+            background: #1a203b;
+            color: #efefef;
+            height: 35px;
+            width: 150px;
+            border: 1px solid #efefef;
+        }
+
+        input{
+            text-align: center;
+            background: #1a203b;
+            color: #efefef;
+            height: 20px;
+            widows: 225px;
+            border: 1px solid #efefef;
+            padding: 5px;
+        }
+
+        img{
+            padding-top: 50px;
+        }
+
+    </style>
 </head>
 <body>
     <center>
         <input type="text" id="client_data" placeholder="TEXT YOU WANT TO DISPLAY"/>
         <button type="button" onclick="generate_qr()">Generate QR Code</button>
         <div id="QR_CODE_DIV">
+            <!-- displaying the qr code image -->
             <img id="qr_code_image"/>
-            <span id="qr_code"></span>
         </div>
     </center>
 
@@ -24,11 +54,15 @@
             var data = document.getElementById("client_data").value;
             // creating a simple get request send the data to the server on another url
             url = "http://localhost:5000/generate_qr_code/" + window.btoa(data);
+            // send a get request with the data to generate the qr-code for 
             httpGet(url);
+            // once the url is complete get the image from the following url
             document.getElementById("qr_code_image").src = "http://localhost:5000/qr_image?"+Math.random()*9999;
         }
 
         function httpGet(theUrl){
+            // making a simple get request to the given url
+            // no data is passed in the get request
             var xmlHttp = new XMLHttpRequest();
             xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
             xmlHttp.send( null );
