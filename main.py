@@ -48,4 +48,4 @@ def return_image():
     return send_file("image.png", attachment_filename="image.png")
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host= '0.0.0.0', port=5000, debug=False)
